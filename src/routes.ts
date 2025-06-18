@@ -6,6 +6,8 @@ import EmprestimoController from "./controller/EmprestimoController";
 import UsuarioController from "./controller/UsuarioController";
 import { upload } from "./config/multerConfig";
 import { uploadCapa } from "./config/multerConfig";
+import swaggerUi from "swagger-ui-express"; // Importa a API do swagger
+import swaggerOutput from "../docs/swagger_doc.json"; // Importa o arquivo de saída do swagger
 
 const router = express.Router();
 
@@ -33,5 +35,8 @@ router.put(SERVER_ROUTES.REMOVER_EMPRESTIMO, EmprestimoController.remover);
 
 // Cadastro de Usuário com Upload de Imagem de Perfil
 router.post(SERVER_ROUTES.NOVO_USUARIO, upload.single('imagemPerfil'), UsuarioController.cadastrar);
+
+// Rota para acessar a documentação
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput)); 
 
 export { router }
